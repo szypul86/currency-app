@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Index;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +21,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "\"user\"", indexes = {@Index(name = "user_email", columnList = "email")})
+@Table(name = "\"user\"", uniqueConstraints = {
+    @UniqueConstraint(columnNames = "email")
+})
 public class User {
 
   @Id
@@ -29,13 +33,16 @@ public class User {
 
   @Column(name = "user_name")
   @NotNull
-  private String userName;
+  private String name;
+
+  @Column(name = "image_url")
+  private String imageUrl;
 
   @Column(name = "email")
   @NotNull
   private String email;
 
-  @Column (name="password")
+  @Column(name = "encoded_password")
   @JsonIgnore
   private String password;
 
@@ -43,6 +50,19 @@ public class User {
   @NotNull
   private String userType;
 
+  @Column(name = "active")
   private boolean active;
+
+  @Column(name = "email_verified")
+  @NotNull
+  private Boolean emailVerified = false;
+
+  @Column(name = "auth_provider")
+  @NotNull
+  @Enumerated(EnumType.STRING)
+  private AuthProvider provider;
+
+  @Column(name = "auth_provider_id")
+  private String providerId;
 
 }

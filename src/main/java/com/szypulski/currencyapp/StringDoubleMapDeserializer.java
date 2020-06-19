@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class StringDoubleMapDeserializer extends JsonDeserializer {
 
   @Override
-  public Map deserialize(JsonParser p, DeserializationContext ctxt)
+  public Map<String, Double> deserialize(JsonParser p, DeserializationContext ctxt)
       throws IOException {
 
     Map<String, Double> rates = new HashMap<>();

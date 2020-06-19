@@ -29,18 +29,4 @@ public class StringStringMapDeserializer extends JsonDeserializer {
     }
     return rates;
   }
-  /*@Override
-  public Map deserialize(JsonParser p, DeserializationContext ctxt)
-      throws IOException {
-
-    Map<String, String> rates = new HashMap<>();
-    JsonNode tree = p.readValueAsTree();
-    ObjectMapper mapper = new ObjectMapper();
-    Iterator<Entry<String, JsonNode>> fields = tree.fields();
-    while (fields.hasNext()) {
-      Entry<String, JsonNode> field = fields.next();
-      rates.put(field.getKey(),mapper.writeValueAsString(field.getValue()));
-    }
-    return rates;
-  }*/
 }

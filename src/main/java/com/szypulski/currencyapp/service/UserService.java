@@ -2,6 +2,7 @@ package com.szypulski.currencyapp.service;
 
 import com.szypulski.currencyapp.UserRepository;
 import com.szypulski.currencyapp.dto.UserDto;
+import com.szypulski.currencyapp.entity.AuthProvider;
 import com.szypulski.currencyapp.entity.User;
 import com.szypulski.currencyapp.security.MyUserDetails;
 import java.util.Optional;
@@ -27,7 +28,7 @@ public class UserService implements UserDetailsService {
   private final BCryptPasswordEncoder encoder;
 
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Optional<User> user = userRepository.findByUserName(username);
+    Optional<User> user = userRepository.findByName(username);
     user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
     return new MyUserDetails(user.get());
   }
@@ -58,18 +59,19 @@ public class UserService implements UserDetailsService {
 
   private User mapUserDtoToUser(UserDto userDto){
     return User.builder()
-        .userName(userDto.getUserName())
+        .name(userDto.getUserName())
         .email(userDto.getEmail())
         .password(encoder.encode(userDto.getPassword()))
         .active(userDto.isActive())
         .userType(String.join(",", userDto.getTypes()))
+        .provider(AuthProvider.local)
         .build();
   }
 
   private UserDto mapUserToUserDto(User user){
     return UserDto.builder()
         .id(user.getId())
-        .userName(user.getUserName())
+        .userName(user.getName())
         .email(user.getEmail())
         .active(user.isActive())
         .types(Stream.of(user.getUserType().split(",")).collect(Collectors.toList()))
