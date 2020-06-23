@@ -1,13 +1,21 @@
 package com.szypulski.currencyapp.controller;
 
-import com.szypulski.currencyapp.service.SendEmailHTML;
+import com.szypulski.currencyapp.service.mail.MailMessageBuilder;
+import com.szypulski.currencyapp.service.mail.MailService;
+import com.szypulski.currencyapp.service.mail.TestMessageBuilder;
+import javax.mail.MessagingException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/test")
 public class TestController {
+
+  private final MailService mailService;
+
 
   @GetMapping("/hello")
   public String hello(){
@@ -15,8 +23,10 @@ public class TestController {
   }
 
   @GetMapping("/sendMail")
-  public String sendMail(){
-    SendEmailHTML.sendMail();
+  public String sendMail() throws MessagingException {
+    //SendEmailHTML.sendMail();
+    MailMessageBuilder testMessageBuilder = new TestMessageBuilder();
+   mailService.send("szypul86@gmail.com", "tescik", testMessageBuilder);
     return "email sent";
   }
 

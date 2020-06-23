@@ -17,14 +17,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Data
 @RequiredArgsConstructor
 @Service
 public class UserService implements UserDetailsService {
 
   private final UserRepository userRepository;
-
   private final BCryptPasswordEncoder encoder;
 
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -17,7 +17,7 @@ public class ExchangeRateService {
 
 
   public ExchangeRateService(ExchangeRateRepository exchangeRateRepository,
-      MoneyService moneyService, Mapper mapper) {
+      MoneyService moneyService) {
     this.exchangeRateRepository = exchangeRateRepository;
     this.moneyService = moneyService;
   }
