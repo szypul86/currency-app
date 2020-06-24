@@ -1,7 +1,7 @@
 package com.szypulski.currencyapp.service.mail;
 
 import com.szypulski.currencyapp.configuration.MailPropertiesConfig;
-import com.szypulski.currencyapp.service.GoogleAuthenticationService;
+import com.szypulski.currencyapp.service.rest.GoogleAuthenticationService;
 import java.util.Date;
 import java.util.Properties;
 import javax.mail.Message;

@@ -1,4 +1,4 @@
-package com.szypulski.currencyapp.service;
+package com.szypulski.currencyapp.service.rest;
 
 import com.szypulski.currencyapp.configuration.GmailOauthPropertiesConfig;
 import com.szypulski.currencyapp.dto.GoogleOauthResponse;

@@ -46,7 +46,6 @@ public class FixerRestClient {
     System.out.println(exchange.getBody());
     exchangeRateService.saveExchangeRatesFromSingleExchangeRateResponse(exchange.getBody());
     return exchange.getBody();
-
   }
 
   //@PostConstruct

@@ -18,20 +18,19 @@ public class TestController {
 
 
   @GetMapping("/hello")
-  public String hello(){
+  public String hello() {
     return "hello";
   }
 
   @GetMapping("/sendMail")
   public String sendMail() throws MessagingException {
-    //SendEmailHTML.sendMail();
     MailMessageBuilder testMessageBuilder = new TestMessageBuilder();
-   mailService.send("szypul86@gmail.com", "tescik", testMessageBuilder);
+    mailService.send("szypul86@gmail.com", "tescik", testMessageBuilder);
     return "email sent";
   }
 
   @GetMapping("/googled")
-  public String hello2(){
+  public String hello2() {
     return "to see this text you need to be logged";
   }
 
