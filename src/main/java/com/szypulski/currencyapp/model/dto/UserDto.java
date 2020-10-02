@@ -1,4 +1,4 @@
-package com.szypulski.currencyapp.dto;
+package com.szypulski.currencyapp.model.dto;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

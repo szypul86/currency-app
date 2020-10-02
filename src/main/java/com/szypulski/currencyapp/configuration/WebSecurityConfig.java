@@ -49,10 +49,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .anyRequest().authenticated()
         .and()
         .formLogin()
-          .and()
+        .and()
         .oauth2Login()
-          .userInfoEndpoint()
-          .userService(customOAuth2UserService)
+        .userInfoEndpoint()
+        .userService(customOAuth2UserService)
     ;
   }
 

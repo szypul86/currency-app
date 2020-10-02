@@ -1,4 +1,4 @@
-package com.szypulski.currencyapp;
+package com.szypulski.currencyapp.model.api.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

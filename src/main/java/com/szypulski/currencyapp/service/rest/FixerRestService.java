@@ -1,10 +1,11 @@
 package com.szypulski.currencyapp.service.rest;
 
-import com.szypulski.currencyapp.api.ExchangeRateResponse;
-import com.szypulski.currencyapp.api.MoneyResponse;
+import com.szypulski.currencyapp.model.api.ExchangeRateResponse;
+import com.szypulski.currencyapp.model.api.MoneyResponse;
 import com.szypulski.currencyapp.service.ExchangeRateService;
 import com.szypulski.currencyapp.service.MoneyService;
 import java.util.Objects;
+import javax.annotation.PostConstruct;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class FixerRestService {
     this.exchangeRateService = exchangeRateService;
   }
 
+  @PostConstruct
   public void saveSymbols() {
     RestTemplate rest = new RestTemplate();
     String url =

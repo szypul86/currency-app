@@ -1,10 +1,11 @@
 package com.szypulski.currencyapp.controller;
 
-import com.szypulski.currencyapp.api.ExchangeRateResponse;
-import com.szypulski.currencyapp.api.MoneyResponse;
+import com.szypulski.currencyapp.model.api.ExchangeRateResponse;
+import com.szypulski.currencyapp.model.api.MoneyResponse;
 import com.szypulski.currencyapp.service.ExchangeRateService;
 import com.szypulski.currencyapp.service.MoneyService;
 import java.util.Objects;
+import javax.annotation.PostConstruct;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -48,7 +49,7 @@ public class FixerRestClient {
     return exchange.getBody();
   }
 
-  //@PostConstruct
+  @PostConstruct
   @GetMapping("/symbols")
   public void saveSymbols() {
 

@@ -1,6 +1,6 @@
 package com.szypulski.currencyapp.security;
 
-import com.szypulski.currencyapp.entity.User;
+import com.szypulski.currencyapp.model.entity.User;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.szypulski.currencyapp.entity;
+package com.szypulski.currencyapp.model.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

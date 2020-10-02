@@ -1,7 +1,7 @@
 package com.szypulski.currencyapp.service.rest;
 
 import com.szypulski.currencyapp.configuration.GmailOauthPropertiesConfig;
-import com.szypulski.currencyapp.dto.GoogleOauthResponse;
+import com.szypulski.currencyapp.model.dto.GoogleOauthResponse;
 import java.util.Objects;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;

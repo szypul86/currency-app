@@ -1,9 +1,9 @@
 package com.szypulski.currencyapp.security.oauth2;
 
-import com.szypulski.currencyapp.UserRepository;
-import com.szypulski.currencyapp.entity.AuthProvider;
-import com.szypulski.currencyapp.entity.User;
 import com.szypulski.currencyapp.exceptions.OAuth2AuthenticationProcessingException;
+import com.szypulski.currencyapp.model.entity.AuthProvider;
+import com.szypulski.currencyapp.model.entity.User;
+import com.szypulski.currencyapp.model.repository.UserRepository;
 import com.szypulski.currencyapp.security.UserPrincipal;
 import com.szypulski.currencyapp.security.oauth2.user.OAuth2UserInfo;
 import com.szypulski.currencyapp.security.oauth2.user.OAuth2UserInfoFactory;
@@ -61,7 +61,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     } else {
       user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
     }
-     return new UserPrincipal(user, oAuth2User.getAttributes());
+    return new UserPrincipal(user, oAuth2User.getAttributes());
   }
 
   private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {

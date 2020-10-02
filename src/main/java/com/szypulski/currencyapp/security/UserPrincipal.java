@@ -1,9 +1,8 @@
 package com.szypulski.currencyapp.security;
 
-import com.szypulski.currencyapp.entity.User;
+import com.szypulski.currencyapp.model.entity.User;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
@@ -32,7 +31,7 @@ public class UserPrincipal implements OAuth2User, UserDetails {
 
   public UserPrincipal(User user, Map<String, Object> attributes) {
     this(user);
-    this.attributes=attributes;
+    this.attributes = attributes;
   }
 
   public Long getId() {

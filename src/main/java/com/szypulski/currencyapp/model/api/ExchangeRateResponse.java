@@ -1,8 +1,8 @@
-package com.szypulski.currencyapp.api;
+package com.szypulski.currencyapp.model.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.szypulski.currencyapp.StringDoubleMapDeserializer;
+import com.szypulski.currencyapp.model.api.deserializer.StringDoubleMapDeserializer;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.AllArgsConstructor;

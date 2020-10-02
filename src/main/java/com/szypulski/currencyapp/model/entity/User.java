@@ -1,4 +1,4 @@
-package com.szypulski.currencyapp.entity;
+package com.szypulski.currencyapp.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
@@ -64,5 +64,4 @@ public class User {
 
   @Column(name = "auth_provider_id")
   private String providerId;
-
 }

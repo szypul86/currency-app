@@ -1,9 +1,8 @@
 package com.szypulski.currencyapp.security.oauth2.user;
 
 
-
-import com.szypulski.currencyapp.entity.AuthProvider;
 import com.szypulski.currencyapp.exceptions.OAuth2AuthenticationProcessingException;
+import com.szypulski.currencyapp.model.entity.AuthProvider;
 import java.util.Map;
 
 public class OAuth2UserInfoFactory {

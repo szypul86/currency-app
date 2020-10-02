@@ -1,8 +1,7 @@
 package com.szypulski.currencyapp.security;
 
-import com.szypulski.currencyapp.UserRepository;
-import com.szypulski.currencyapp.entity.User;
-import javassist.NotFoundException;
+import com.szypulski.currencyapp.model.entity.User;
+import com.szypulski.currencyapp.model.repository.UserRepository;
 import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,8 +20,9 @@ public class CustomUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     User user = userRepository.findByEmail(email)
-        .orElseThrow(()-> new UsernameNotFoundException("User with email: " + email + " does not exist"));
-  return new UserPrincipal(user);
+        .orElseThrow(
+            () -> new UsernameNotFoundException("User with email: " + email + " does not exist"));
+    return new UserPrincipal(user);
   }
 
   @Transactional

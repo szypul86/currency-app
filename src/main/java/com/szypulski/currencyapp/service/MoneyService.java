@@ -1,8 +1,9 @@
 package com.szypulski.currencyapp.service;
 
-import com.szypulski.currencyapp.entity.Money;
-import com.szypulski.currencyapp.repository.MoneyRepository;
-import com.szypulski.currencyapp.api.MoneyResponse;
+import com.szypulski.currencyapp.model.api.MoneyResponse;
+import com.szypulski.currencyapp.model.entity.Money;
+import com.szypulski.currencyapp.model.repository.MoneyRepository;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,11 +15,17 @@ public class MoneyService {
     this.moneyRepository = moneyRepository;
   }
 
-  public void save(Money money){
-    moneyRepository.save(money);
+  public void save(Money money) {
+    if (moneyRepository.findById(money.getSymbol()).isEmpty()) {
+      moneyRepository.save(money);
+    }
   }
 
-  public Money findBySymbol(String symbol){
+  public List<Money> findBySymbolIn(List<String> symbols) {
+    return moneyRepository.findBySymbolIn(symbols);
+  }
+
+  public Money findBySymbol(String symbol) {
     return moneyRepository.findById(symbol).orElseThrow();
   }
 

@@ -1,11 +1,11 @@
-package com.szypulski.currencyapp;
+package com.szypulski.currencyapp.model.api.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.szypulski.currencyapp.entity.Money;
+import com.szypulski.currencyapp.model.entity.Money;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class StringStringMapDeserializer extends JsonDeserializer {
+
   @Override
   public Set<Money> deserialize(JsonParser p, DeserializationContext ctxt)
       throws IOException {

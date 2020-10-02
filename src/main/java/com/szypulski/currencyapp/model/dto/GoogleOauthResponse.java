@@ -1,4 +1,4 @@
-package com.szypulski.currencyapp.dto;
+package com.szypulski.currencyapp.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
