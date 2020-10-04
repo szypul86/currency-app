@@ -1,7 +1,9 @@
 package com.szypulski.currencyapp.model.entity;
 
+import com.szypulski.currencyapp.model.dto.ExchangeRateDto;
+
 public interface IAllert {
 
-  boolean shouldAllert(Double value);
+  boolean shouldAlert(ExchangeRateDto exchangeRateDto, Double value);
 
 }
