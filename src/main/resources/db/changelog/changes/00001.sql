@@ -1,38 +1,38 @@
+
+CREATE TABLE IF NOT EXISTS "money" (
+    symbol varchar,
+    description character varying,
+    CONSTRAINT symbol_pk PRIMARY KEY (symbol)
+) ;
+
 CREATE TABLE IF NOT EXISTS "user" (
-    id bigint PRIMARY KEY,
-    name character varying NOT NULL,
-    imageUrl character varying,
-    email character varying NOT NULL,
+    id bigserial PRIMARY KEY,
+    "user_name" character varying NOT NULL,
+    image_url character varying,
+    "email" character varying UNIQUE NOT NULL ,
     encoded_password character varying,
     user_type character varying NOT NULL,
     active bool,
     email_verified bool,
     auth_provider character varying NOT NULL,
-    auth_provider_id character varying NOT NULL,
-    CONSTRAINT email_uq UNIQUE (email)
-);
+    auth_provider_id character varying NOT NULL
+) ;
 
-
-CREATE TABLE IF NOT EXISTS "money" (
-    symbol varchar,
-    description character varying,
-    CONSTRAINT symbol_pk PRIMARY KEY
-);
 
 CREATE TABLE IF NOT EXISTS "exchange_rate" (
-    id bigint PRIMARY KEY (symbol),
+    id bigserial PRIMARY KEY,
     "timestamp" bigint,
-    "from" character varying,
-    "to" character varying,
+    "base_money_symbol" character varying,
+    "exchange_money_symbol" character varying,
     value double precision,
-    CONSTRAINT from_fk FOREIGN KEY ("from")
+    CONSTRAINT from_fk FOREIGN KEY ("base_money_symbol")
         REFERENCES "money" (symbol) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT to_fk FOREIGN KEY ("to")
+    CONSTRAINT to_fk FOREIGN KEY ("exchange_money_symbol")
         REFERENCES "money" (symbol) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-);
+) ;
 
 
