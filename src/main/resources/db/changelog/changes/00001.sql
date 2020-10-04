@@ -1,3 +1,4 @@
+CREATE SEQUENCE IF NOT EXISTS "hibernate_sequence" INCREMENT BY 1 MINVALUE 1;
 
 CREATE TABLE IF NOT EXISTS "money" (
     symbol varchar,
