@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface IMapObserver {
 
-  void update(Map<String,Double> stringDoubleMap);
+  void update(Map<String, Double> stringDoubleMap);
 
 }

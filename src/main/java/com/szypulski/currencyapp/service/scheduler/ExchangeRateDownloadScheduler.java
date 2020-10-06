@@ -3,8 +3,6 @@ package com.szypulski.currencyapp.service.scheduler;
 import com.szypulski.currencyapp.model.api.ExchangeRateResponse;
 import com.szypulski.currencyapp.service.IMapObservable;
 import com.szypulski.currencyapp.service.IMapObserver;
-import com.szypulski.currencyapp.service.IObservable;
-import com.szypulski.currencyapp.service.IObserver;
 import com.szypulski.currencyapp.service.rest.FixerRestService;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +24,9 @@ public class ExchangeRateDownloadScheduler implements IMapObservable {
   private String BASE_CURRENCY = "EUR";
   private String CURRENCY_SYMBOLS = "USD,PLN,GBP";
 
-  @Scheduled(fixedRate = 3600000)
+  @Scheduled(fixedRate = 360000)
   public void getLatestExchangeRate() {
+
     try {
       ExchangeRateResponse err = fixerRestService.getLatest(BASE_CURRENCY, CURRENCY_SYMBOLS);
       log.info("ExchangeRate successfully added to db: {}", err.toString());
@@ -51,8 +50,8 @@ public class ExchangeRateDownloadScheduler implements IMapObservable {
   }
 
   @Override
-  public void inform(Map<String,Double> stringDoubleMap) {
-    this.observers.forEach(o-> o.update(stringDoubleMap));
+  public void inform(Map<String, Double> stringDoubleMap) {
+    this.observers.forEach(o -> o.update(stringDoubleMap));
     /*for (IMapObserver observer : this.observers) {
       observer.update(stringDoubleMap);
     }*/

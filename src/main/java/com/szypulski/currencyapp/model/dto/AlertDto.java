@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class AllertDto {
+public class AlertDto {
 
   private final Long id;
 

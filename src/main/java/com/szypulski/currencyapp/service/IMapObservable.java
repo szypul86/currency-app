@@ -8,6 +8,6 @@ public interface IMapObservable {
 
   void removeObserver(IMapObserver iObserver);
 
-  void inform(Map<String,Double> stringDoubleMap);
+  void inform(Map<String, Double> stringDoubleMap);
 
 }

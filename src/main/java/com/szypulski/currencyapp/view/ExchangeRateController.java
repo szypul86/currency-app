@@ -1,4 +1,4 @@
-package com.szypulski.currencyapp.controller;
+package com.szypulski.currencyapp.view;
 
 import com.szypulski.currencyapp.model.dto.ExchangeRateDto;
 import com.szypulski.currencyapp.service.ExchangeRateService;

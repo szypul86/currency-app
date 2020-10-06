@@ -1,4 +1,4 @@
-package com.szypulski.currencyapp.controller;
+package com.szypulski.currencyapp.view;
 
 import com.szypulski.currencyapp.service.mail.MailMessageBuilder;
 import com.szypulski.currencyapp.service.mail.MailService;

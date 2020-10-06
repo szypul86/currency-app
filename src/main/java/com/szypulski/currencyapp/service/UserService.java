@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService {
     return mapUserToUserDto(findById(userId));
   }
 
-  private User findById(Long userId) {
+  protected User findById(Long userId) {
     return userRepository.findById(userId)
         .orElseThrow(() -> new UsernameNotFoundException("Not found: " + userId));
   }

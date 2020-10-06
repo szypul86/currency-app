@@ -34,7 +34,8 @@ public class ExchangeRateService {
     return findAllNonBaseCurrencyFromTo(pageable, from, to);
   }
 
-  private List<ExchangeRateDto> findAllNonBaseCurrencyFromTo(Pageable pageable, String from, String to) {
+  private List<ExchangeRateDto> findAllNonBaseCurrencyFromTo(Pageable pageable, String from,
+      String to) {
     List<Money> moneys = moneyService.findBySymbolIn(List.of(from, to));
     Money moneyFrom = filterMoney(from, moneys);
     Money moneyTo = filterMoney(to, moneys);
@@ -59,7 +60,8 @@ public class ExchangeRateService {
     return moneys.stream().filter(m -> m.getSymbol().equals(from)).findAny().orElseThrow();
   }
 
-  private List<ExchangeRateDto> findAllBaseCurrencyFromTo(Pageable pageable, String from, String to) {
+  private List<ExchangeRateDto> findAllBaseCurrencyFromTo(Pageable pageable, String from,
+      String to) {
     if (from.equals(BASE_CURRENCY)) {
       return findAllFromBaseCurrencyToDtos(pageable, to);
     }
@@ -110,7 +112,8 @@ public class ExchangeRateService {
     return mapNonBaseCurrencyEntityToDto(rateFrom, rateTo);
   }
 
-  private ExchangeRateDto mapNonBaseCurrencyEntityToDto(ExchangeRate rateFrom, ExchangeRate rateTo) {
+  private ExchangeRateDto mapNonBaseCurrencyEntityToDto(ExchangeRate rateFrom,
+      ExchangeRate rateTo) {
     return ExchangeRateDto.builder()
         .date(new Date(rateFrom.getTimestamp()))
         .from(rateFrom.getTo().getSymbol())
