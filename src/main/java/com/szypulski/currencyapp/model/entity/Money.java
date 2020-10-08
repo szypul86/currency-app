@@ -21,4 +21,11 @@ public class Money {
 
   private String description;
 
+  @Override
+  public String toString() {
+    return "Money{" +
+        "symbol='" + symbol + '\'' +
+        ", description='" + description + '\'' +
+        '}';
+  }
 }

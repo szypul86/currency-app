@@ -6,6 +6,7 @@ import com.szypulski.currencyapp.service.ExchangeRateService;
 import com.szypulski.currencyapp.service.MoneyService;
 import java.util.Objects;
 import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,10 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/consume")
 public class FixerRestClient {
 
-  private final String API_KEY = "fcafab1d2108e775e67b32cb166581da";
+  @Value("${api.key}")
+  private String API_KEY;
 
   private final MoneyService moneyService;
-
   private final ExchangeRateService exchangeRateService;
 
   public FixerRestClient(MoneyService moneyService,
@@ -49,7 +50,6 @@ public class FixerRestClient {
     return exchange.getBody();
   }
 
-  @PostConstruct
   @GetMapping("/symbols")
   public void saveSymbols() {
 
@@ -64,7 +64,6 @@ public class FixerRestClient {
 
     System.out.println(exchange.getBody());
     moneyService.saveAllFromResponse(Objects.requireNonNull(exchange.getBody()));
-
   }
 
 

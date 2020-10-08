@@ -4,11 +4,14 @@ import com.szypulski.currencyapp.model.dto.AlertDto;
 import com.szypulski.currencyapp.service.CurrencyAlertManagerService;
 import com.szypulski.currencyapp.service.CurrencyAlertService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -16,31 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/alerts")
 public class AlertController {
 
-  private final CurrencyAlertManagerService currencyAlertManagerService;
   private final CurrencyAlertService currencyAlertService;
-  //private final UserService userService;
-  //private final ExchangeRateDownloadScheduler scheduler;
 
   @PostMapping
-  public AlertDto save(@RequestBody AlertDto alertDto) {
-    return currencyAlertService.save(alertDto);
+  public ResponseEntity<AlertDto> save(@RequestBody AlertDto alertDto) {
+    return new ResponseEntity<>(currencyAlertService.save(alertDto), HttpStatus.OK);
   }
 
   @GetMapping("/{id}")
-  public AlertDto findById(@PathVariable Long id) {
-    return currencyAlertService.findDtoById(id);
+  public ResponseEntity<AlertDto> findById(@PathVariable Long id) {
+    return new ResponseEntity<>(currencyAlertService.findDtoById(id),HttpStatus.OK);
   }
 
-  /*@GetMapping("/manager/{currency}")
-  public String createManager(@PathVariable String currency){
-  CurrencyAlertManager manager = new CurrencyAlertManager(alertService,userService);
-  manager.setCurrency(currency);
-  manager.subscribe(scheduler);
-  return "manager created";
-  }*/
-
-  @GetMapping("/manager/{currency}")
-  public void createManager(@PathVariable String currency) {
-    currencyAlertManagerService.createManager(currency);
-  }
 }

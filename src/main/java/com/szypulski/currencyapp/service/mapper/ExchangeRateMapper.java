@@ -36,13 +36,14 @@ public class ExchangeRateMapper {
   }
 
   public ExchangeRateDto mapEntityToView(ExchangeRate er) {
-    return ExchangeRateDto.builder()
+    ExchangeRateDto erd =  ExchangeRateDto.builder()
         .id(er.getId())
         .date(new Date(er.getTimestamp()))
         .from(er.getFrom().getSymbol())
         .to(er.getTo().getSymbol())
         .value(er.getValue())
         .build();
+    return erd;
   }
 
   public List<ExchangeRateDto> mapEntitiesToViews(Page<ExchangeRate> ers) {

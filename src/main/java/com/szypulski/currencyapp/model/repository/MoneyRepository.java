@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface MoneyRepository extends JpaRepository<Money, String> {
 
   List<Money> findBySymbolIn(List<String> symbol);
+
+
 }

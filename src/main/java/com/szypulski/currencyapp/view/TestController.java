@@ -1,11 +1,13 @@
 package com.szypulski.currencyapp.view;
 
+import com.szypulski.currencyapp.service.CurrencyAlertManagerService;
 import com.szypulski.currencyapp.service.mail.MailMessageBuilder;
 import com.szypulski.currencyapp.service.mail.MailService;
 import com.szypulski.currencyapp.service.mail.TestMessageBuilder;
 import javax.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
   private final MailService mailService;
-
+  private final CurrencyAlertManagerService currencyAlertManagerService;
 
   @GetMapping("/hello")
   public String hello() {
@@ -34,4 +36,9 @@ public class TestController {
     return "to see this text you need to be logged";
   }
 
+
+  @GetMapping("/manager/{currency}")
+  public void createManager(@PathVariable String currency) {
+    currencyAlertManagerService.createManager(currency);
+  }
 }

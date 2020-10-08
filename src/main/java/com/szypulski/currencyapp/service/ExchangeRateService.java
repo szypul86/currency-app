@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class ExchangeRateService {
   private final ExchangeRateRepository exchangeRateRepository;
   private final MoneyService moneyService;
   private final ExchangeRateMapper exchangeRateMapper;
-
+  @Value("${base.currency}")
   private String BASE_CURRENCY = "EUR";
 
 
@@ -43,6 +44,7 @@ public class ExchangeRateService {
         .findAllByToOrderByTimestampDesc(pageable, moneyFrom);
     Page<ExchangeRate> tos = exchangeRateRepository
         .findAllByToOrderByTimestampDesc(pageable, moneyTo);
+
     return mapNonBaseCurrencyEntityPagesToDtos(froms, tos);
   }
 
