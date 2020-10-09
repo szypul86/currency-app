@@ -4,16 +4,15 @@ import com.szypulski.currencyapp.model.api.MoneyResponse;
 import com.szypulski.currencyapp.model.entity.Money;
 import com.szypulski.currencyapp.model.repository.MoneyRepository;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class MoneyService {
 
   private final MoneyRepository moneyRepository;
 
-  public MoneyService(MoneyRepository moneyRepository) {
-    this.moneyRepository = moneyRepository;
-  }
 
   public void save(Money money) {
     if (moneyRepository.findById(money.getSymbol()).isEmpty()) {

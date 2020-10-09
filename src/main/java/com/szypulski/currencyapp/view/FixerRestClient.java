@@ -2,10 +2,9 @@ package com.szypulski.currencyapp.view;
 
 import com.szypulski.currencyapp.model.api.ExchangeRateResponse;
 import com.szypulski.currencyapp.model.api.MoneyResponse;
-import com.szypulski.currencyapp.service.ExchangeRateService;
-import com.szypulski.currencyapp.service.MoneyService;
+import com.szypulski.currencyapp.service.rest.FixerRestService;
 import java.util.Objects;
-import javax.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/consume")
 public class FixerRestClient {
@@ -23,47 +23,16 @@ public class FixerRestClient {
   @Value("${api.key}")
   private String API_KEY;
 
-  private final MoneyService moneyService;
-  private final ExchangeRateService exchangeRateService;
-
-  public FixerRestClient(MoneyService moneyService,
-      ExchangeRateService exchangeRateService) {
-    this.moneyService = moneyService;
-    this.exchangeRateService = exchangeRateService;
-  }
+  private final FixerRestService fixerRestService;
 
   @GetMapping("/latest")
   public ExchangeRateResponse getLatest(@RequestParam String base, @RequestParam String symbols) {
-
-    RestTemplate rest = new RestTemplate();
-    String url =
-        "http://data.fixer.io/api/latest?access_key=" + API_KEY + "&base=" + base + "&symbols="
-            + symbols;
-
-    ResponseEntity<ExchangeRateResponse> exchange = rest.exchange(url,
-        HttpMethod.GET,
-        HttpEntity.EMPTY,
-        ExchangeRateResponse.class);
-
-    System.out.println(exchange.getBody());
-    exchangeRateService.saveExchangeRatesFromSingleExchangeRateResponse(exchange.getBody());
-    return exchange.getBody();
+    return fixerRestService.getLatest(base, symbols);
   }
 
   @GetMapping("/symbols")
   public void saveSymbols() {
-
-    RestTemplate rest = new RestTemplate();
-    String url =
-        "http://data.fixer.io/api/symbols?access_key=" + API_KEY;
-
-    ResponseEntity<MoneyResponse> exchange = rest.exchange(url,
-        HttpMethod.GET,
-        HttpEntity.EMPTY,
-        MoneyResponse.class);
-
-    System.out.println(exchange.getBody());
-    moneyService.saveAllFromResponse(Objects.requireNonNull(exchange.getBody()));
+    fixerRestService.saveSymbols();
   }
 
 

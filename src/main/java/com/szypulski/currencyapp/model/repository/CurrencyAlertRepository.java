@@ -7,7 +7,7 @@ import com.szypulski.currencyapp.model.enums.AlertType;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AlertRepository extends JpaRepository<CurrencyAlert, Long> {
+public interface CurrencyAlertRepository extends JpaRepository<CurrencyAlert, Long> {
 
   List<CurrencyAlert> findAllByAlertType(AlertType type);
 

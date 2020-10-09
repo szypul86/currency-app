@@ -3,12 +3,17 @@ package com.szypulski.currencyapp;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.szypulski.currencyapp.model.dto.UserDto;
 import com.szypulski.currencyapp.model.entity.ExchangeRate;
 import com.szypulski.currencyapp.model.entity.Money;
+import com.szypulski.currencyapp.model.repository.CurrencyAlertRepository;
 import com.szypulski.currencyapp.model.repository.ExchangeRateRepository;
 import com.szypulski.currencyapp.model.repository.MoneyRepository;
+import com.szypulski.currencyapp.model.repository.UserRepository;
+import com.szypulski.currencyapp.service.CurrencyAlertService;
 import com.szypulski.currencyapp.service.ExchangeRateService;
 import com.szypulski.currencyapp.service.MoneyService;
+import com.szypulski.currencyapp.service.UserService;
 import com.szypulski.currencyapp.service.mapper.ExchangeRateMapper;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -23,29 +28,39 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles ="test")
-public class TestBase {
+@ActiveProfiles(profiles = "test")
+public abstract class TestBase {
 
-  private final ObjectMapper mapper = new ObjectMapper();
+
+  @Autowired
+  public ObjectMapper mapper;
 
   @Value("${base.currency}")
   public String BASE_CURRENCY;
 
   @Autowired
   protected MockMvc mockMvc;
+  @Autowired
+  protected CurrencyAlertService currencyAlertService;
+  @Autowired
+  protected CurrencyAlertRepository currencyAlertRepository;
+  @Autowired
+  protected ExchangeRateService exchangeRateService;
+  @Autowired
+  protected ExchangeRateRepository exchangeRateRepository;
+  @Autowired
+  protected MoneyService moneyService;
+  @Autowired
+  protected MoneyRepository moneyRepository;
+  @Autowired
+  protected ExchangeRateMapper exchangeRateMapper;
+  @Autowired
+  protected UserService userService;
+  @Autowired
+  protected UserRepository userRepository;
+  @Autowired
+  protected RestTemplate restTemplate;
 
-  @Autowired
-  ExchangeRateService exchangeRateService;
-  @Autowired
-  ExchangeRateRepository exchangeRateRepository;
-  @Autowired
-  private MoneyService moneyService;
-  @Autowired
-  private MoneyRepository moneyRepository;
-  @Autowired
-  private ExchangeRateMapper exchangeRateMapper;
-  @Autowired
-  private RestTemplate restTemplate;
 
   //@Before()
   public void initialSetUp() {
@@ -87,26 +102,37 @@ public class TestBase {
 
     exchangeRateRepository.deleteAll();
     moneyRepository.deleteAll();
-
+    currencyAlertRepository.deleteAll();
+    userRepository.deleteAll();
   }
 
-  public void saveDefaultMoneys(){
+  public void saveDefaultMoneys() {
     moneyRepository.saveAll(List.of(
-        new Money(BASE_CURRENCY, BASE_CURRENCY +"aski"),
+        new Money(BASE_CURRENCY, BASE_CURRENCY + "aski"),
         new Money("USD", "zielone"),
         new Money("PLN", "złocisze"),
-        new Money("GBP","funie")));
+        new Money("GBP", "funie")));
   }
 
-  public void saveExchangeRate(String from, String to, Double value, int milisecFromBaseTimestamp){
+  public void saveExchangeRate(String from, String to, Double value, int milisecFromBaseTimestamp) {
     Money moneyFrom = moneyRepository.findById(from).orElse(new Money(from, from + "ki"));
     Money moneyTo = moneyRepository.findById(to).orElse(new Money(to, to + "ki"));
     ExchangeRate exr = ExchangeRate.builder()
         .from(moneyFrom)
         .to(moneyTo)
-        .timestamp(123456789L-milisecFromBaseTimestamp)
+        .timestamp(123456789L - milisecFromBaseTimestamp)
         .value(value)
         .build();
     exchangeRateRepository.save(exr);
+  }
+
+  public UserDto createDtoUser(String email, List<String> roles) {
+    return UserDto.builder()
+        .userName(email.split("@")[0])
+        .email(email)
+        .password("password")
+        .active(true)
+        .types(roles)
+        .build();
   }
 }

@@ -44,7 +44,6 @@ public class ExchangeRateService {
         .findAllByToOrderByTimestampDesc(pageable, moneyFrom);
     Page<ExchangeRate> tos = exchangeRateRepository
         .findAllByToOrderByTimestampDesc(pageable, moneyTo);
-
     return mapNonBaseCurrencyEntityPagesToDtos(froms, tos);
   }
 
@@ -104,7 +103,6 @@ public class ExchangeRateService {
     exchangeRateDto.setValue(1 / exchangeRateDto.getValue());
     return exchangeRateDto;
   }
-
 
   private ExchangeRateDto findNewestNonBaseCurrencyFromTo(String from, String to) {
     List<Money> moneys = moneyService.findBySymbolIn(List.of(from, to));
