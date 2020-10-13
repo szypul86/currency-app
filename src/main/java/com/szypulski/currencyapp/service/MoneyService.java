@@ -4,6 +4,7 @@ import com.szypulski.currencyapp.model.api.MoneyResponse;
 import com.szypulski.currencyapp.model.entity.Money;
 import com.szypulski.currencyapp.model.repository.MoneyRepository;
 import java.util.List;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,8 @@ public class MoneyService {
   }
 
   public Money findBySymbol(String symbol) {
-    return moneyRepository.findById(symbol).orElseThrow();
+    return moneyRepository.findById(symbol).orElseThrow(
+        ()-> new NoSuchElementException("Symbol: " + symbol + " does not exist"));
   }
 
   public void saveAllFromResponse(MoneyResponse moneyResponse) {

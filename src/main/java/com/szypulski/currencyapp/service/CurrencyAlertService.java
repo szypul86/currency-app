@@ -8,6 +8,7 @@ import com.szypulski.currencyapp.model.enums.AlertType;
 import com.szypulski.currencyapp.model.repository.CurrencyAlertRepository;
 import com.szypulski.currencyapp.service.mapper.AlertMapper;
 import java.util.List;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,16 @@ public class CurrencyAlertService {
     return alertMapper.mapEntityToDto(currencyAlert);
   }
 
+  public AlertDto updateById(Long id, AlertDto alertDto){
+    CurrencyAlert currencyAlert = findById(id);
+    User user = userService.findById(alertDto.getUserId());
+    Money money = moneyService.findBySymbol(alertDto.getTo());
+    currencyAlert = alertMapper.mapDtoToEntity(alertDto,currencyAlert,money,user);
+    currencyAlertRepository.save(currencyAlert);
+    return(alertMapper.mapEntityToDto(currencyAlert));
+
+  }
+
   public AlertDto deleteById(Long id) {
     CurrencyAlert currencyAlert = findById(id);
     currencyAlertRepository.deleteById(id);
@@ -49,6 +60,6 @@ public class CurrencyAlertService {
   }
 
   protected CurrencyAlert findById(Long id) {
-    return currencyAlertRepository.findById(id).orElseThrow();
+    return currencyAlertRepository.findById(id).orElseThrow(()->new NoSuchElementException("Alert with id:" + id + " not found"));
   }
 }

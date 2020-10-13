@@ -24,15 +24,5 @@ public class GlobalControllerExceptionHandler {
     return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
   }
 
-  /*@ResponseStatus(value = HttpStatus.NOT_FOUND)
-  @ExceptionHandler(NoSuchElementException.class)
-  @ResponseBody
-  public UserMessageView noSuchElementException(NoSuchElementException e) {
-    log.info("No such element exception occurred ", e);
-    UserMessageView errorView = new UserMessageView();
-    errorView.setMessage(e.getMessage());
-    errorView.setHttpStatus(HttpStatus.NOT_FOUND);
-    return errorView;
-  }*/
 
 }

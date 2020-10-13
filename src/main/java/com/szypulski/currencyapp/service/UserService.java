@@ -1,15 +1,13 @@
 package com.szypulski.currencyapp.service;
 
 import com.szypulski.currencyapp.model.dto.UserDto;
-import com.szypulski.currencyapp.model.entity.AuthProvider;
 import com.szypulski.currencyapp.model.entity.User;
 import com.szypulski.currencyapp.model.repository.UserRepository;
 import com.szypulski.currencyapp.security.MyUserDetails;
 import com.szypulski.currencyapp.service.mapper.UserMapper;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Data
@@ -31,7 +28,8 @@ public class UserService implements UserDetailsService {
 
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     Optional<User> user = userRepository.findByName(username);
-    user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
+    user.orElseThrow(
+        () -> new UsernameNotFoundException("User with username: " + username + "not found"));
     return new MyUserDetails(user.get());
   }
 
@@ -48,7 +46,7 @@ public class UserService implements UserDetailsService {
     }
   }
 
-  public List<UserDto> findAllPaged (Pageable pageable){
+  public List<UserDto> findAllPaged(Pageable pageable) {
     Page<User> userPage = userRepository.findAll(pageable);
     return userMapper.mapEntityPageToDtoList(userPage);
   }
@@ -59,7 +57,7 @@ public class UserService implements UserDetailsService {
 
   protected User findById(Long userId) {
     return userRepository.findById(userId)
-        .orElseThrow(() -> new UsernameNotFoundException("Not found: " + userId));
+        .orElseThrow(() -> new NoSuchElementException("User with id: " + userId + "not found"));
   }
 
   public UserDto updateById(Long userId, UserDto userDto) {
@@ -75,7 +73,6 @@ public class UserService implements UserDetailsService {
     userRepository.delete(user);
     return userDto;
   }
-
 
 
 }

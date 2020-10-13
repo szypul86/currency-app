@@ -6,9 +6,12 @@ import com.szypulski.currencyapp.service.CurrencyAlertService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,9 +29,22 @@ public class AlertController {
     return new ResponseEntity<>(currencyAlertService.save(alertDto), HttpStatus.OK);
   }
 
+  @PreAuthorize("@authenticationService.doesUserMatchBodyHiddenId(#id) || hasRole('ROLE_ADMIN')")
   @GetMapping("/{id}")
   public ResponseEntity<AlertDto> findById(@PathVariable Long id) {
     return new ResponseEntity<>(currencyAlertService.findDtoById(id),HttpStatus.OK);
+  }
+
+  @PreAuthorize("@authenticationService.doesUserMatchBodyHiddenIdAndDtoId(#id, #alertDto) || hasRole('ROLE_ADMIN')")
+  @PutMapping("/{id}")
+  public ResponseEntity<AlertDto> updateById(@PathVariable Long id, @RequestBody AlertDto alertDto) {
+    return new ResponseEntity<>(currencyAlertService.updateById(id, alertDto), HttpStatus.OK);
+  }
+
+  @PreAuthorize("@authenticationService.doesUserMatchBodyHiddenId(#id) || hasRole('ROLE_ADMIN')")
+  @DeleteMapping("/{id}")
+  public ResponseEntity<AlertDto> DeleteById(@PathVariable Long id) {
+    return new ResponseEntity<>(currencyAlertService.deleteById(id), HttpStatus.OK);
   }
 
 

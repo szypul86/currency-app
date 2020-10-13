@@ -8,6 +8,7 @@ import com.szypulski.currencyapp.model.repository.ExchangeRateRepository;
 import com.szypulski.currencyapp.service.mapper.ExchangeRateMapper;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,34 @@ public class ExchangeRateService {
   @Value("${base.currency}")
   private String BASE_CURRENCY = "EUR";
 
+
+  @Transactional
+  public void saveExchangeRatesFromSingleExchangeRateResponse(ExchangeRateResponse response) {
+    Set<ExchangeRate> setToBeSaved = exchangeRateMapper.mapApiResponseToEntities(response);
+    Money money = moneyService.findBySymbol(response.getBase());
+
+    Set<ExchangeRate> setFromDatabase = exchangeRateRepository
+        .findAllByTimestampAndFrom(response.getTimestamp(),
+            money);
+
+    if (setFromDatabase.size() > 0) {
+      setToBeSaved = getExchangeRatesWithoutExistingRates(setToBeSaved,
+          setFromDatabase);
+    }
+    exchangeRateRepository.saveAll(setToBeSaved);
+  }
+
+  private Set<ExchangeRate> getExchangeRatesWithoutExistingRates(Set<ExchangeRate> setToBeSaved,
+      Set<ExchangeRate> setFromDatabase) {
+
+    return setToBeSaved.stream()
+        .filter(exchangeRate ->
+            !setFromDatabase.stream()
+                .map(ExchangeRate::getTo)
+                .collect(Collectors.toList())
+                .contains(exchangeRate.getTo()))
+        .collect(Collectors.toSet());
+  }
 
   public List<ExchangeRateDto> findAllPagedDtos(Pageable pageable, String from, String to) {
     if (List.of(from, to).contains(BASE_CURRENCY)) {
@@ -126,34 +155,15 @@ public class ExchangeRateService {
     return rates.stream()
         .filter(er -> er.getTo().getSymbol().equals(from))
         .findAny()
-        .orElseThrow();
+        .orElseThrow(() -> new NoSuchElementException(
+            "No exchange rate with currency of:" + from + " was found"));
   }
 
-  @Transactional
-  public void saveExchangeRatesFromSingleExchangeRateResponse(ExchangeRateResponse response) {
-    Set<ExchangeRate> setToBeSaved = exchangeRateMapper.mapApiResponseToEntities(response);
-    Money money = moneyService.findBySymbol(response.getBase());
+ public List<ExchangeRateDto> deleteByTimestampBefore(Long timestamp){
+    return exchangeRateRepository.deleteAllByTimestampBefore(timestamp).stream()
+        .map(exchangeRateMapper::mapEntityToView)
+        .collect(Collectors.toList());
+ }
 
-    Set<ExchangeRate> setFromDatabase = exchangeRateRepository
-        .findAllByTimestampAndFrom(response.getTimestamp(),
-            money);
 
-    if (setFromDatabase.size() > 0) {
-      setToBeSaved = getExchangeRatesWithoutExistingRates(setToBeSaved,
-          setFromDatabase);
-    }
-    exchangeRateRepository.saveAll(setToBeSaved);
-  }
-
-  private Set<ExchangeRate> getExchangeRatesWithoutExistingRates(Set<ExchangeRate> setToBeSaved,
-      Set<ExchangeRate> setFromDatabase) {
-
-    return setToBeSaved.stream()
-        .filter(exchangeRate ->
-            !setFromDatabase.stream()
-                .map(ExchangeRate::getTo)
-                .collect(Collectors.toList())
-                .contains(exchangeRate.getTo()))
-        .collect(Collectors.toSet());
-  }
 }

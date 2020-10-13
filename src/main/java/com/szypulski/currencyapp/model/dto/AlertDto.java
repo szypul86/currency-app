@@ -8,13 +8,13 @@ import lombok.Data;
 @Data
 public class AlertDto {
 
-  private final Long id;
+  private Long id;
 
-  private final Long userId;
+  private Long userId;
 
-  private final String to;
+  private String to;
 
-  private final Double alertValue;
+  private Double alertValue;
 
-  private final AlertType alertType;
+  private AlertType alertType;
 }

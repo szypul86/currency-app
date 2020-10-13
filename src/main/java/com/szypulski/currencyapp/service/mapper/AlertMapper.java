@@ -32,6 +32,14 @@ public class AlertMapper {
         .build();
   }
 
+  public CurrencyAlert mapDtoToEntity(AlertDto dto, CurrencyAlert alert, Money money, User user) {
+    alert.setAlertValue(dto.getAlertValue());
+    alert.setAlertType(dto.getAlertType());
+    alert.setTo(money);
+    alert.setUser(user);
+    return  alert;
+  }
+
   public List<AlertDto> mapEntitiesToDtos(Collection<CurrencyAlert> alertsCollection) {
     return alertsCollection.stream()
         .map(this::mapEntityToDto)

@@ -99,11 +99,10 @@ public abstract class TestBase {
 
   @BeforeEach
   public void setUp() throws URISyntaxException, JsonProcessingException {
-
-    exchangeRateRepository.deleteAll();
-    moneyRepository.deleteAll();
-    currencyAlertRepository.deleteAll();
     userRepository.deleteAll();
+    exchangeRateRepository.deleteAll();
+    currencyAlertRepository.deleteAll();
+    moneyRepository.deleteAll();
   }
 
   public void saveDefaultMoneys() {

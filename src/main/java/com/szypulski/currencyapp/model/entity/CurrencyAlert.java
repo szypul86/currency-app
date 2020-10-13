@@ -1,11 +1,14 @@
 package com.szypulski.currencyapp.model.entity;
 
 import com.szypulski.currencyapp.model.enums.AlertType;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -26,10 +29,14 @@ public class CurrencyAlert {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  @ManyToOne()
+  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH,
+      CascadeType.REMOVE}, fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
   private User user;
 
-  @OneToOne()
+  @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH,
+      CascadeType.REMOVE}, fetch = FetchType.LAZY)
+  @JoinColumn(name = "exchange_money_symbol", referencedColumnName = "symbol")
   private Money to;
 
   @Column(name = "alert_value")

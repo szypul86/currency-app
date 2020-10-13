@@ -30,7 +30,7 @@ public class ExchangeRate {
   private Long timestamp;
 
   @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH,
-      CascadeType.REMOVE}, fetch = FetchType.LAZY)
+      CascadeType.REMOVE},  fetch = FetchType.LAZY)
   @JoinColumn(name = "base_money_symbol", referencedColumnName = "symbol")
   private Money from;
 

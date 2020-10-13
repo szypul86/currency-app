@@ -22,4 +22,6 @@ ExchangeRateRepository extends JpaRepository<ExchangeRate, Long> {
   List<ExchangeRate> findFirst2ByToInOrderByTimestampDesc(List<Money> to);
 
   Page<ExchangeRate> findAll(Pageable pageable);
+
+  List<ExchangeRate> deleteAllByTimestampBefore(Long timestamp);
 }

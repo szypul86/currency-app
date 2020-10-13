@@ -59,7 +59,7 @@ class UserControllerTest extends TestBase {
 
   @Test
   @WithMockUser(roles = "USER")
-  void whenFindAllPagedwithUserRoleReturnsForbiden() throws Exception {
+  void whenFindAllPagedWithUserRoleReturnsForbiden() throws Exception {
 
     for (int i = 0; i < 30; i++) {
       UserDto userDto = createDtoUser(i + "user@email.pl", List.of("USER"));
